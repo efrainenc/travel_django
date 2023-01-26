@@ -17,7 +17,7 @@
 </form>
 <div class="gallery">
   {% for location in locations %}
-  <a href="{% url 'spot_list' location.id %}">
+  <a href="{% url 'spot_list' location.pk %}">
     <div class="card" style="max-width: 400px; max-height: 500px;">
       <div class="card-image">
         <figure class="image is-square">

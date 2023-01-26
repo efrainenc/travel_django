@@ -41,12 +41,12 @@ class LocationImageDisplay(DetailView):
 
 # Spot Views
 class SpotList(TemplateView):
-  template_name = "spot_list.html"
+    template_name = "spot_list.html"
 
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    context["spots"] = Spot.objects.all()
-    return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["spots"] = Spot.objects.all()
+        return context
 
 class SpotCreate(CreateView):
     model = Spot
@@ -77,3 +77,8 @@ class SpotImageDisplay(DetailView):
 class SpotDisplay(DetailView):
     model = Spot
     template_name = 'spot_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["spots"] = Spot.objects.filter(location__pk= self.kwargs['pk'])
+        return context
