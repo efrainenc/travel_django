@@ -20,7 +20,7 @@ class Spot(models.Model):
   name = models.CharField(max_length=100)
   description = models.CharField(max_length=500, blank=True, null=True)
   address = models.CharField(max_length=250, blank=True, null=True)
-  image = models.ImageField(blank=True, upload_to='spots/')
+  image = models.ImageField(blank=True, upload_to='spots/image/%Y/%m/%d/')
   num_stars = models.IntegerField(blank=True, null=True)
 
   def __str__(self):

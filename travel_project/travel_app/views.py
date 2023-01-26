@@ -1,10 +1,12 @@
 from django.shortcuts import render
 
 from django.views import View
-from django.http import HttpResponse
-from django.views.generic.base import TemplateView
+from django.http import HttpResponse, HttpResponseRedirect
 # This will import the class we are extending 
 from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, DetailView
+from .forms import SpotForm
 
 # import models
 from .models import Location, Spot
@@ -32,6 +34,11 @@ class LocationList(TemplateView):
             context["locations"] = Location.objects.all()
         return context
 
+class LocationImageDisplay(DetailView):
+    model = Location
+    template_name = 'location_list.html'
+    context_object_name = 'location'
+
 # Spot Views
 class SpotList(TemplateView):
   template_name = "spot_list.html"
@@ -46,3 +53,23 @@ class SpotCreate(CreateView):
     fields = ['location', 'name', 'description', 'address', 'image', 'num_stars']
     template_name = "spot_create.html"
     success_url = "/spots/"
+
+class SpotImage(TemplateView):
+    form = SpotForm
+    template_name = 'spot_create.html'
+
+    def post(self, request, *args, **kwargs):
+        form = SpotForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse_lazy('home', kwargs={'pk': pk}))
+        context = self.get_context_data(form=form)
+        return self.render_to_response(context)     
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+class SpotImageDisplay(DetailView):
+    model = Spot
+    template_name = 'spot_list.html'
+    context_object_name = 'spot'
