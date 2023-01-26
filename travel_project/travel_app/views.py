@@ -73,3 +73,7 @@ class SpotImageDisplay(DetailView):
     model = Spot
     template_name = 'spot_list.html'
     context_object_name = 'spot'
+
+class SpotDisplay(DetailView):
+    model = Spot
+    template_name = 'spot_list.html'
