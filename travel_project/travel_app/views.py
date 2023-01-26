@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
+# This will import the class we are extending 
+from django.views.generic.edit import CreateView
 
 # import models
 from .models import Location, Spot
@@ -14,6 +16,7 @@ class Home(TemplateView):
 class About(TemplateView):
   template_name = 'about.html'
 
+# Location Views
 class LocationList(TemplateView):
     template_name = "location_list.html"
 
@@ -29,6 +32,7 @@ class LocationList(TemplateView):
             context["locations"] = Location.objects.all()
         return context
 
+# Spot Views
 class SpotList(TemplateView):
   template_name = "spot_list.html"
 
@@ -37,3 +41,8 @@ class SpotList(TemplateView):
     context["spots"] = Spot.objects.all()
     return context
 
+class SpotCreate(CreateView):
+    model = Spot
+    fields = ['location', 'name', 'description', 'address', 'image', 'num_stars']
+    template_name = "spot_create.html"
+    success_url = "/spots/"
