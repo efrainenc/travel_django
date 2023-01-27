@@ -5,20 +5,18 @@
 <form class="mb-5" method="get">
   <div class="field has-addons">
     <div class="control">
-      <!--  Our input will search by the country of location  -->
       <input class="input" type="text" name="country" placeholder="Country.." />
     </div>
     <div class="control">
       <input class="button is-success" type="submit" value="Search" />
     </div>
   </div>
-  <!--  This anchor tag will redirect back to location list without a query param -->
   <a class="button is-dark" href="{% url 'location_list' %}">Clear Search</a>
 </form>
 <div class="gallery">
   {% for location in locations %}
-  <a href="{% url 'spot_list' location.pk %}">
-    <div class="card" style="max-width: 400px; max-height: 500px;">
+  <a href="{% url 'spot_list' location.id %}">
+    <div class="card" style="max-width: 350px; max-height: 500px;">
       <div class="card-image">
         <figure class="image is-square">
           <img src="{{location.image.url}}" alt="{{location.city}}" />
