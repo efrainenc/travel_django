@@ -5,10 +5,10 @@
 
 {% block content %}
 
-<h1 class="title pt-5">Trending Spots</h1>
+<h1 class="title pt-5">Trending Spots{% if spot and spot.pk == spot.location_id %} in {{spot.location.city}} {% endif %}</h1>
 <div class="gallery">
   {% for spot in spots %}
-  <a href="">
+  <a href="{% url 'spot_detail' spot.pk %}">
     <div class="card">
       <div class="card-image">
         <figure class="image is-square">
@@ -17,7 +17,7 @@
       </div>
       <div class="card-header">
         <p class="card-header-title">{{spot.name}}</p>
-        <p class="card-header-title">{{spot.artist}}</p>
+        <p class="card-header-title">{{spot.num_stars}} stars</p>
       </div>
     </div>
   </a>
@@ -28,6 +28,6 @@
     </div>
   </article>
   {% endfor %}
-  <a class="button is-dark" href="{% url 'spot_create' %}">Add Spot</a>
+  <a class="button is-dark" href="{% url 'spot_create' %}">Add Spot +</a>
 </div>
 {% endblock %}

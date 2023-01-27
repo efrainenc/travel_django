@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect
 # This will import the class we are extending 
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, DetailView
 from .forms import SpotForm
 
@@ -82,3 +82,21 @@ class SpotDisplay(DetailView):
         context = super().get_context_data(**kwargs)
         context["spots"] = Spot.objects.filter(location__pk= self.kwargs['pk'])
         return context
+
+class SpotDetail(DetailView):
+    model = Spot
+    template_name = "spot_detail.html"
+
+class SpotUpdate(UpdateView):
+    model = Spot
+    template_name = "spot_update.html"
+    fields = ['location', 'name', 'description', 'address', 'image', 'num_stars']
+    
+    def get_success_url(self):
+        return reverse('spot_detail', kwargs={'pk': self.object.pk})
+
+
+class SpotDelete(DeleteView):
+    model = Spot
+    template_name = "spot_delete.html"
+    success_url = "/spots/"

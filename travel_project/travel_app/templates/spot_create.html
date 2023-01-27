@@ -2,6 +2,7 @@
 {% block content %}
 <h1>Add a Spot</h1>
 
+<!-- enctype="multipart/form-data" allows form to submit ImageField and etc-->
 <form method = "post" enctype="multipart/form-data">
 <!-- Security Feature  -->
   {% csrf_token %} 
